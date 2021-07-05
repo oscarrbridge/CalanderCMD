@@ -33,13 +33,16 @@ def main():
             token.write(creds.to_json())
     service = build('calendar', 'v3', credentials=creds)
 
+    events = show_items_in_calendar(service)
+
     option = "0"
 
     while option not in ["1"]:
         option = input("What would you like to do? ")
 
         if option == "1":
-            show_items_in_calendar(service)
+            check_before_school(events)
+
 
 
 if __name__ == '__main__':
