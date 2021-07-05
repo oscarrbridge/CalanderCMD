@@ -80,8 +80,6 @@ def check_before_school(events):
         print(events[item][0][1])
         if events[item][0][0] <= 8 and events[item][0][1] <= 50:
             print("you can go to anna's")
-        else:
-            print("you cant go to anna's")
 
 
 """
