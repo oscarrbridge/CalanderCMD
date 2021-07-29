@@ -44,6 +44,5 @@ def main():
             check_before_school(events)
 
 
-
 if __name__ == '__main__':
     main()
