@@ -13,15 +13,11 @@ found_auth, found_client = False, False
 for package in range(len(installed_packages_list)):
     package_list.append(installed_packages_list[package].split("=="))
 
-    print(package_list[len(package_list)-1][0])
-
     if "google-auth-oauthlib" in package_list[len(package_list)-1][0]:
         found_auth = True
-        print("Found auth")
 
     if "google-api-python-client" in package_list[len(package_list)-1][0]:
         found_client = True
-        print("Found client")
 
     if found_client and found_auth is True:
         print("Required packages found...")

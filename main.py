@@ -37,11 +37,13 @@ def main():
 
     option = "0"
 
-    while option not in ["1"]:
-        option = input("What would you like to do? ")
+    while True:
+        while option not in ["1"]:
+            option = input("What would you like to do? ")
 
-        if option == "1":
-            check_before_school(events)
+            if option == "1":
+                check_before_school(events)
+        option = "0"
 
 
 if __name__ == '__main__':

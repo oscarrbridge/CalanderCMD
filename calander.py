@@ -1,14 +1,22 @@
 import datetime
+from secret import *
 
 # hour, minute, day, month, year
+# This is the list format that the date is stored in
+
+NUMBER_OF_RESULTS = 30  # Specifies the number of events to return to the program
+
 
 def show_items_in_calendar(service):
+    """
+    Get specified number of items and make the format easier to read.
+    """
 
-    now = datetime.datetime.utcnow().isoformat() + 'Z'  # gets
-    print('Getting the upcoming 10 events')
-    events_result = service.events().list(calendarId='nikniulp2ftvmqqdvthn3p7je0@group.calendar.google.com',
+    now = datetime.datetime.utcnow().isoformat() + 'Z'
+    print(f'Getting the upcoming {NUMBER_OF_RESULTS} events')
+    events_result = service.events().list(calendarId=calender_id,
                                           timeMin=now,
-                                          maxResults=10, singleEvents=True,
+                                          maxResults=NUMBER_OF_RESULTS, singleEvents=True,
                                           orderBy='startTime').execute()
     events = events_result.get('items', [])
 
@@ -16,27 +24,27 @@ def show_items_in_calendar(service):
         print('No upcoming events found.')
 
     start_time = {}
-    # print(events)
 
     for event in events:
-        start_time[len(start_time) + 1] = [event['start']['dateTime'], event['summary']]
-        #  print(start_time[1][0]['dateTime'], event['summary'])
+        try:
+            start_time[len(start_time) + 1] = [event['start']['dateTime'], event['summary']]
+        except KeyError:
+            pass
 
     for entry in start_time:
         dates = []
-        # print(start_time[entry])
         for number in start_time[entry][0]:
-            # print(number, number.isdigit())
-            # print(start_time[entry][0])
             if number.isdigit() is True:
                 dates.append(number)
 
-        dates_int = "".join(dates)  # change this to int()
+        dates_int = "".join(dates)
         start_time[entry][0] = dates_int
-        # print(start_time[entry][0])
 
     # print(start_time)
     for entry in start_time:
+        """
+        Convert given time format to one that is easier to read.
+        """
         year = []
         month = []
         day = []
@@ -71,27 +79,12 @@ def show_items_in_calendar(service):
 
     return start_time
 
-    # print(start_time[entry][0][3])
-
 
 def check_before_school(events):
     for item in events:
-        print(events[item][0][0])
-        print(events[item][0][1])
-        if events[item][0][0] <= 8 and events[item][0][1] <= 50:
-            print("you can go to anna's")
-
-
-"""
-    for entry in start_time:
-        for number in start_time[entry][0]:
-            start_time[entry]["year"] = number[:4]
-            print(start_time[entry]["year"])
-"""
-
-
-"""  # This will give the id's for calendars
-calendar_list = service.calendarList().list().execute()
-for calendar_list_entry in calendar_list['items']:
-    print("calendar list", calendar_list_entry)
-"""
+        # print(events[item][0][0]) This will show you the dates / times
+        # print(events[item][0][1]) This will show you the summary of the event
+        if events[item][1] == "Thing to look for":
+            # This is the event name the program will look for ^^^
+            print(f"The thing is happening on the {events[item][0][2]}th")
+            # This is the response the program will give if the event is found ^^^
